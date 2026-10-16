@@ -1,0 +1,15 @@
+services:
+  airflow:
+    image: apache/airflow:2.9.3
+    command: standalone            # webserver + scheduler + SQLite metadata DB (dev only)
+    ports: ["8080:8080"]
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      WAREHOUSE_DB: /opt/airflow/data/warehouse.db
+      INPUT_DIR: /opt/airflow/data/input
+      WORK_DIR: /opt/airflow/data/work
+      SQL_DIR: /opt/airflow/sql
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./sql:/opt/airflow/sql
+      - ./data:/opt/airflow/data
